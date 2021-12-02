@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./api
+    environment:
+      API_PORT:
+      POSTGRES_CONNECTION:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+      POSTGRES_DB:
+      POSTGRES_HOST: postgres
+    ports:
+      - '80:${API_PORT}'
+    volumes:
+      - ./api/src:/usr/app/src
+    depends_on:
+      postgres:
+        condition: service_healthy
+      
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_CONNECTION
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres", ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
