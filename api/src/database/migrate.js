@@ -11,10 +11,6 @@ const KNEX = require('knex')({
     }
 });
 
-/**
- * 
- */
-
 const MIGRATE = {
 
     async makeTables(){

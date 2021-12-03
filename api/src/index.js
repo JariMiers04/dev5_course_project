@@ -18,6 +18,6 @@ APP.use(BODYPARSER.json());
 MIGRATE.makeTables();
 SEED.insertData();
 
-APP.listen(PORT, ()=>{
-    console.log(`listening on port ${PORT}`);
-})
+// APP.listen(PORT, ()=>{
+//     console.log(`listening on port ${PORT}`);
+// })
