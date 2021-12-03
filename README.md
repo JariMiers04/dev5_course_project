@@ -44,16 +44,6 @@ cd my-repo
 ## Installation
  Change .env.template to .env and fill in the variables.
 
-Open a terminal window in the root folder.
-```bash 
-cd api/
-```
-
-Install the node modules from package.json file.
- ```bash
-npm install
-```
-
 Because we are using docker-compose we need to build our images and container.
  
  ```bash
