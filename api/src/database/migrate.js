@@ -52,4 +52,4 @@ const MIGRATE = {
     }
 }
 
-module.exports = MIGRATE
+module.exports = {MIGRATE, KNEX}
