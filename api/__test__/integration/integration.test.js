@@ -1,7 +1,7 @@
 const SUPERTEST = require('supertest');
-const {SERVER} = require("../../src/index.js");
+const {APP} = require("../../src/index.js");
 
-const TEST = SUPERTEST(SERVER);
+const TEST = SUPERTEST(APP);
 
 
 describe("Testing data on endpoints", ()=>{
