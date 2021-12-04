@@ -9,9 +9,9 @@ const MIGRATE = {
             if (!exists) {
                 return await KNEX.schema.createTable('food', (table) => {
                     table.double('barcode', 12).primary();
-                    table.string('product_name');
-                    table.date('expiration_date');
-                    table.integer('weight');
+                    table.string('product_name').notNullable();
+                    table.date('expiration_date').notNullable();
+                    table.integer('weight').notNullable();
                 })
             }
         });
@@ -20,9 +20,9 @@ const MIGRATE = {
             if(!exists){
                 return await KNEX.schema.createTable('users', (table) => {
                     table.increments('id').primary();
-                    table.string('name');
-                    table.string('email');
-                    table.string('password');
+                    table.string('name').notNullable();
+                    table.string('email').notNullable();
+                    table.string('password').notNullable();
                 })
             }
         });
