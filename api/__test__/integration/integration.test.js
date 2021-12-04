@@ -1,7 +1,7 @@
 const SUPERTEST = require('supertest');
 const {APP} = require("../../src/index.js");
 
-const TEST = SUPERTEST(APP);
+const REQUEST = SUPERTEST(APP);
 
 
 describe("Testing data on endpoints", ()=>{
@@ -10,15 +10,41 @@ describe("Testing data on endpoints", ()=>{
     })
 });
 
-describe("Testing post data on endpoints", ()=>{
-    it("testing post method on food", (done)=>{
-         TEST.post('/food').send({
-            barcode: 5200141837741,
-            product_name: "Test",
-            expiration_date: "2021-11-05",
-            weight: 30
-        }).expect(200).then(()=>{
-            done();
-          })
+
+describe("Testing all the get endpoints", ()=>{
+    it("/", (done)=>{
+        REQUEST.get("/").expect(200).end((err,res)=>{
+            try{
+                done();
+            }catch(err){
+                done(err);
+            }
+        })
+    })
+    
+    it("/", (done)=>{
+        REQUEST.get("/").expect(200).end((err,res)=>{
+            try{
+                expect(res.body.length).toBe(3)
+                done();
+            }catch(err){
+                done(err);
+            }
+        })
     })
 })
+
+
+// describe("Testing POST data on endpoints", ()=>{
+//     it("This test should fail there is no send data", (done)=>{
+//          REQUEST.post('/food').expect(400).end(()=>{
+//              try{
+//                  done();
+
+//              }catch(err){
+//                  console.log(err);
+//                  done(err);
+//              }
+//          })
+//     });
+// })
