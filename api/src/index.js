@@ -15,9 +15,12 @@ APP.use(BODYPARSER.urlencoded({
 }))
 APP.use(BODYPARSER.json());
 
+async function initializer(){
+   await MIGRATE.makeTables();
+//    await SEED.insertData();
+};
 
-MIGRATE.makeTables();
-SEED.insertData();
+initializer();
 
 
 APP.get("/", async (req,res)=>{
