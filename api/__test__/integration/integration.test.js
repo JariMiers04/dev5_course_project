@@ -1,7 +1,18 @@
 const SUPERTEST = require('supertest');
 const {APP} = require("../../src/index.js");
 
+const {KNEX} = require("../../src/knex");
+const {SEED} = require("../../src/database/seeder");
+
 const REQUEST = SUPERTEST(APP);
+
+
+beforeAll(async ()=>{
+    await KNEX('food').del();
+    await KNEX('users').del();
+    await KNEX('fridge').del();
+    SEED.insertData();
+})
 
 
 describe("Testing data on endpoints", ()=>{
@@ -61,6 +72,7 @@ describe("Testing GET endpoints", ()=>{
     it("/food/:barcode getting a specific item from the database", (done)=>{
         REQUEST.get("/food/5400141299649").expect(200).end((err,res)=>{
             try{
+                console.log("Get on barcode", res.body)
                 expect(res.body).toEqual(getOnBarcode);
                 done();
             }catch(err){
@@ -75,15 +87,49 @@ describe("Testing GET endpoints", ()=>{
 
 
 describe("Testing POST endpoints", ()=>{
-    it("This test should fail there is no send data", (done)=>{
-         REQUEST.post('/food').expect(400).end(()=>{
-             try{
-                 done();
+    
+    /**
+     * 
+     * POST FOODS
+     */
 
-             }catch(err){
-                 console.log(err);
-                 done(err);
-             }
-         })
-    });
+     const addFoodItem = {
+        barcode: 5400141299627,
+        product_name: "This is a test from the integration",
+        expiration_date: "2021-12-04",
+        weight: 69
+    }
+
+    it("/ connect with endpoint that is not a post", (done)=>{
+        REQUEST.post("/").send(addFoodItem).expect(400).end((err,res)=>{
+            try{
+                done();
+            }catch(err){
+                done(err);
+            }
+        })
+    })
+
+    it("/food add food item", (done)=>{
+
+        REQUEST.post("/food").send(addFoodItem).expect(200).end((err,res)=>{
+            try{
+                console.log(res.body);
+                expect(res.body.barcode).toEqual(addFoodItem.barcode);
+                expect(res.body.product_name).toEqual("This is a test from the integration");
+                expect(res.body.weight).toEqual(69);
+                done()
+            }catch(err){
+                done(err);
+            }
+        })
+    })
+})
+
+afterAll(async()=>{
+    try{
+        KNEX.destroy();
+    }catch(err){
+        console.log(err);
+    }
 })

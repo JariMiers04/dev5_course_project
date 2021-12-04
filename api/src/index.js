@@ -11,7 +11,7 @@ const {SEED} = require("../src/database/seeder");
 const {KNEX} = require("./knex");
 
 APP.use(BODYPARSER.urlencoded({
-    extended: false
+    extended: true
 }))
 APP.use(BODYPARSER.json());
 
@@ -52,9 +52,7 @@ APP.post("/food", async (req,res)=>{
         weight
     }
 
-    await postFoodData(postFood);
-
-    res.status(200).send();
+    postFoodData(postFood).then(res.status(200).send(req.body));
 });
 
 async function postFoodData(addFood){
