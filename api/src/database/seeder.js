@@ -1,4 +1,4 @@
-const {KNEX} = require("./migrate");
+const {KNEX} = require("../knex");
 
 
 const SEED ={

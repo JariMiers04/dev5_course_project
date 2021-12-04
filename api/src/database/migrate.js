@@ -1,16 +1,6 @@
 'use strict';
 
-const KNEX = require('knex')({
-    client: "pg",
-    connection: {
-        host: process.env.POSTGRES_HOST ? process.env.POSTGRES_HOST : 'localhost',
-        port: 5432,
-        user: process.env.POSTGRES_USER ? process.env.POSTGRES_USER : "root",
-        password: process.env.POSTGRES_PASSWORD ? process.env.POSTGRES_PASSWORD : 'root',
-        database: process.env.POSTGRES_DB ? process.env.POSTGRES_DB : "foodStock"
-    }
-});
-
+const {KNEX} = require("../knex");
 const MIGRATE = {
 
     async makeTables(){
@@ -19,9 +9,9 @@ const MIGRATE = {
             if (!exists) {
                 return await KNEX.schema.createTable('food', (table) => {
                     table.double('barcode', 12).primary();
-                    table.string('product_name');
-                    table.date('expiration_date');
-                    table.integer('weight');
+                    table.string('product_name').notNullable();
+                    table.date('expiration_date').notNullable();
+                    table.integer('weight').notNullable();
                 })
             }
         });
@@ -30,9 +20,9 @@ const MIGRATE = {
             if(!exists){
                 return await KNEX.schema.createTable('users', (table) => {
                     table.increments('id').primary();
-                    table.string('name');
-                    table.string('email');
-                    table.string('password');
+                    table.string('name').notNullable();
+                    table.string('email').notNullable();
+                    table.string('password').notNullable();
                 })
             }
         });
