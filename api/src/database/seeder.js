@@ -4,9 +4,9 @@ const {KNEX} = require("../knex");
 const SEED ={
     async insertData(){
 
-        // adding food items to postgress database 
+        try{
 
-        if(KNEX.schema.hasTable('food') == false){
+        // adding food items to postgress database 
 
             await KNEX.table('food').insert([{
                 barcode: 5400141916229,
@@ -24,12 +24,9 @@ const SEED ={
                 expiration_date: "2021-11-05",
                 weight: 70
             }]);
-    
-        }
+        
 
         // adding users to postgres database
-
-        if(KNEX.schema.hasTable('users') == false){
 
             await KNEX('users').insert([{
                 name: "Jari Miers",
@@ -41,16 +38,15 @@ const SEED ={
                 email: "fien.denblinden@student.ehb.be",
                 password: "test2"
             }]);
-        }
 
 
         // adding a fridge id 
-
-        if(KNEX.schema.hasTable('fridge') == false){
-
             await KNEX.table('fridge').insert({
                 id: 1
             })
+        }catch(err){
+            console.log(err);
+            process.exit(1);
         }
     }
 }
