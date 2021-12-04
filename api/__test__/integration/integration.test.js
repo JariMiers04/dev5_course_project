@@ -126,6 +126,19 @@ describe("Testing POST endpoints", ()=>{
     })
 })
 
+
+describe("Testing PUT endpoints" ,()=>{
+    it("/food/:barcode update", (done)=>{
+        REQUEST.put("/food/5400141916229").expect(401).end((err,res)=>{
+            try{
+                done();
+            }catch(err){
+                done(err)
+            }
+        })
+    })
+})
+
 afterAll(async()=>{
     try{
         KNEX.destroy();

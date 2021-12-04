@@ -65,6 +65,20 @@ async function postFoodData(addFood){
 }
 
 
+
+APP.put("/food/:barocde", async ()=>{
+    let item = KNEX.table("food").where({
+        barcode: req.params.barcode
+    }).update({
+        product_name: req.body.product_name,
+        expiration_date: req.body.expiration_date,
+        weight: req.body.weight
+    })
+
+    res.status(200).send(await item);
+})
+
+
 APP.listen(PORT, ()=>{
     console.log(`listening on port ${PORT}`);
 })
