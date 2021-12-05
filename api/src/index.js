@@ -156,6 +156,15 @@ APP.put("/user/:id", async ()=>{
     res.sendStatus(200).send(await user);
 })
 
+
+APP.delete("/user/:id", async (req,res)=>{
+    let user = KNEX.table("users").where({
+        id: req.params.id
+    }).delete();
+
+    res.sendStatus(200).send(await user);
+})
+
 APP.listen(PORT, ()=>{
     console.log(`listening on port ${PORT}`);
 })

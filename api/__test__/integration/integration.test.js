@@ -274,13 +274,14 @@ describe("Testing POST endpoints", () => {
 
 describe("Testing DELETE endpoints", () => {
 
+    describe("FOOD DELETE endpoint", ()=>{
     /**
      * 
      * DELETE FOODS
      * 
      */
 
-    it("/food/:barcode FAIL delete", (done) => {
+     it("/food/:barcode FAIL delete", (done) => {
         REQUEST.delete("/food/123456789012").expect(401).end((err, res) => {
             try {
                 done();
@@ -308,6 +309,35 @@ describe("Testing DELETE endpoints", () => {
     //         }
     //     })
     // })
+    })
+
+    describe("USER DELETE endpoint", ()=>{
+        /**
+     * 
+     * DELETE USER
+     * 
+     */
+
+    // still problem ask teacher
+    // it("/user/:id SUCCEED delete", (done)=>{
+    //     REQUEST.delete("/user/2").expect(200).end((err,res)=>{
+    //         try{
+    //             KNEX("users").where("id", 2).then((data)=>{
+    //                 expect(data).toEqual([{
+    //                     id: 2,
+    //                     name: "Fien Denblinden",
+    //                     email: "fien.denblinden@student.ehb.be",
+    //                     password: "test2"
+    //                 }]);
+    //                 done();
+    //             })
+    //         }catch(err){
+    //             done(err)
+    //         }
+    //     })
+    // })
+    // })
+
 })
 
 afterAll(async () => {
