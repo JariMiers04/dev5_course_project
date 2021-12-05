@@ -336,7 +336,7 @@ describe("Testing DELETE endpoints", () => {
     //         }
     //     })
     // })
-    // })
+    })
 
 })
 
