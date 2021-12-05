@@ -143,6 +143,19 @@ async function userPost(postUser){
     })
 }
 
+
+APP.put("/user/:id", async ()=>{
+    let user = KNEX.table("users").where({
+        id: req.params.id
+    }).update({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    })
+
+    res.sendStatus(200).send(await user);
+})
+
 APP.listen(PORT, ()=>{
     console.log(`listening on port ${PORT}`);
 })

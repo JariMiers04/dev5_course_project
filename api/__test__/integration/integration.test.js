@@ -198,14 +198,14 @@ describe("Testing POST endpoints", () => {
     })
 
 
-    describe("USER POST endpoint", ()=>{
+    describe("USER POST endpoint", () => {
         /**
          * 
          * POST USERS
          * 
          */
 
-         const addUser = {
+        const addUser = {
             id: 3,
             name: "Janneke",
             email: "janneke@outlook.com",
@@ -230,18 +230,46 @@ describe("Testing POST endpoints", () => {
 })
 
 
-// describe("Testing PUT endpoints" ,()=>{
-//         // still problem ask teacher
-//     it("/food/:barcode update", (done)=>{
-//         REQUEST.put("/food/5400141916229").expect(401).end((err,res)=>{
-//             try{
-//                 done();
-//             }catch(err){
-//                 done(err)
-//             }
-//         })
-//     })
-// });
+describe("Testing PUT endpoints", () => {
+    describe("FOOD UPDATE endpoint", () => {
+        /**
+         * 
+         * UPDATE FOOD
+         * 
+         */
+
+        // still problem ask teacher
+        it("/food/:barcode update", (done) => {
+            REQUEST.put("/food/5400141916229").expect(401).end((err, res) => {
+                try {
+                    done();
+                } catch (err) {
+                    done(err)
+                }
+            })
+        })
+    })
+
+    describe("USER UPDATE endpoint", () => {
+        /**
+         * 
+         * UPDATE USER
+         * 
+         */
+
+
+        it("/user/:id update", (done) => {
+            REQUEST.put("/user/4").expect(401).end((err, res) => {
+                try {
+                    done()
+                } catch (err) {
+                    done(err)
+                }
+            })
+        })
+
+    })
+});
 
 
 describe("Testing DELETE endpoints", () => {
