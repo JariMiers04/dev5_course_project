@@ -22,6 +22,11 @@ async function initializer(){
 
 initializer();
 
+/**
+ * 
+ * FOOD
+ * 
+ */
 
 APP.get("/", async (req,res)=>{
     await KNEX.select().table('food').then((data)=>{
