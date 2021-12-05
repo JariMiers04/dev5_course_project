@@ -34,6 +34,7 @@ APP.get("/", async (req,res)=>{
     })
 });
 
+
 APP.get("/food/:barcode", async (req,res)=>{
     console.log(req.params.barcode);
 
@@ -43,6 +44,7 @@ APP.get("/food/:barcode", async (req,res)=>{
 
     res.send(await foodItem);
 });
+
 
 APP.post("/food", async (req,res)=>{
     let barcode = req.body.barcode;
@@ -68,7 +70,6 @@ async function postFoodData(addFood){
         weight: addFood.weight
     })
 }
-
 
 
 APP.put("/food/:barocde", async ()=>{
@@ -105,6 +106,7 @@ APP.delete("/food/:barcode", async (req,res)=>{
     })
 });
 
+
 APP.get("/user/:id", async (req,res)=>{
     console.log(req.params.id);
 
@@ -115,9 +117,35 @@ APP.get("/user/:id", async (req,res)=>{
     res.send(await user);
 });
 
+
+APP.post("/user", async (req,res)=>{
+    let id = req.body.id;
+    let name = req.body.name;
+    let email = req.body.email;
+    let password = req.body.password;
+
+    let postUser = {
+        id,
+        name,
+        email,
+        password
+    }
+
+    userPost(postUser).then(res.status(200).send(req.body));
+});
+
+async function userPost(postUser){
+    await KNEX.table('users').insert({
+        id: postUser.id,
+        name: postUser.name,
+        email: postUser.email,
+        password: postUser.password
+    })
+}
+
 APP.listen(PORT, ()=>{
     console.log(`listening on port ${PORT}`);
 })
 
 
-module.exports = {APP, postFoodData}
+module.exports = {APP, postFoodData, userPost}

@@ -140,13 +140,13 @@ describe("Testing GET endpoints", () => {
             password: "test"
         }
 
-        it("/user/:id getting a specific user from the database", (done)=>{
-            REQUEST.get("/user/1").expect(200).end((err,res)=>{
-                try{
+        it("/user/:id getting a specific user from the database", (done) => {
+            REQUEST.get("/user/1").expect(200).end((err, res) => {
+                try {
                     console.log("Get on id", res.body);
                     expect(res.body).toEqual(getOnUserId);
                     done();
-                }catch(err){
+                } catch (err) {
                     done(err);
                 }
             })
@@ -157,48 +157,80 @@ describe("Testing GET endpoints", () => {
 
 describe("Testing POST endpoints", () => {
 
-    /**
-     * 
-     * POST FOODS
-     * 
-     */
+    describe("FOOD POST endpoints", () => {
+        /**
+         * 
+         * POST FOODS
+         * 
+         */
 
-    const addFoodItem = {
-        barcode: 5400141299627,
-        product_name: "This is a test from the integration",
-        expiration_date: "2021-12-04",
-        weight: 69
-    }
+        const addFoodItem = {
+            barcode: 5400141299627,
+            product_name: "This is a test from the integration",
+            expiration_date: "2021-12-04",
+            weight: 69
+        }
 
-    it("/ connect with endpoint that is not a post", (done) => {
-        REQUEST.post("/").send(addFoodItem).expect(400).end((err, res) => {
-            try {
-                done();
-            } catch (err) {
-                done(err);
-            }
+        it("/ connect with endpoint that is not a post", (done) => {
+            REQUEST.post("/").send(addFoodItem).expect(400).end((err, res) => {
+                try {
+                    done();
+                } catch (err) {
+                    done(err);
+                }
+            })
+        })
+
+        it("/food add food item", (done) => {
+
+            REQUEST.post("/food").send(addFoodItem).expect(200).end((err, res) => {
+                try {
+                    console.log(res.body);
+                    expect(res.body.barcode).toEqual(addFoodItem.barcode);
+                    expect(res.body.product_name).toEqual("This is a test from the integration");
+                    expect(res.body.weight).toEqual(69);
+                    done()
+                } catch (err) {
+                    done(err);
+                }
+            })
         })
     })
 
-    it("/food add food item", (done) => {
 
-        REQUEST.post("/food").send(addFoodItem).expect(200).end((err, res) => {
-            try {
-                console.log(res.body);
-                expect(res.body.barcode).toEqual(addFoodItem.barcode);
-                expect(res.body.product_name).toEqual("This is a test from the integration");
-                expect(res.body.weight).toEqual(69);
-                done()
-            } catch (err) {
-                done(err);
-            }
+    describe("USER POST endpoint", ()=>{
+        /**
+         * 
+         * POST USERS
+         * 
+         */
+
+         const addUser = {
+            id: 3,
+            name: "Janneke",
+            email: "janneke@outlook.com",
+            password: "jeanke"
+        }
+
+        it("/user add user", (done) => {
+
+            REQUEST.post("/user").send(addUser).expect(200).end((err, res) => {
+                try {
+                    console.log(res.body);
+                    expect(res.body.id).toEqual(addUser.id);
+                    expect(res.body.name).toEqual("Janneke");
+                    done()
+                } catch (err) {
+                    done(err);
+                }
+            })
         })
     })
+
 })
 
 
 // describe("Testing PUT endpoints" ,()=>{
-
 //         // still problem ask teacher
 //     it("/food/:barcode update", (done)=>{
 //         REQUEST.put("/food/5400141916229").expect(401).end((err,res)=>{
