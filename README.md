@@ -5,8 +5,6 @@ This project will be my course-project for development 5 in my last years bachel
 
 ## Getting Started
 
-### GETTING STARTED?
-
 
 1)  Open VSCode
 2)  Create a folder on your pc, open the terminal and type:
@@ -62,18 +60,48 @@ docker-compose up
 ```
 ## Routes to use
 
-Get all
+### Food routes
+
+Get all food items
 ```
-localhost:80
+localhost:80/
 ```
 For making a post method
 ```
-localhost:80/items
+localhost:80/food
 ```
-Getting a upc code
+Getting a barcode's data
 ```
-localhost:80/items/:upc
+localhost:80/food/:barcode
 ```
+
+Deleting a barcode's data
+```
+localhost:80/food/:barcode
+```
+
+### User routes
+
+Get all users
+```
+localhost:80/users
+```
+
+Adding a user
+```
+localhost:80/user
+```
+
+Getting a user on id
+```
+localhost:80/user/:id
+```
+
+Deleting a user on id
+```
+localhost:80/user/:id
+```
+
 ## Open Source License
 
    Copyright 2021 Jari Miers
