@@ -165,9 +165,9 @@ APP.delete("/user/:id", async (req,res)=>{
     res.sendStatus(200).send(await user);
 })
 
-APP.listen(PORT, ()=>{
-    console.log(`listening on port ${PORT}`);
-})
+// APP.listen(PORT, ()=>{
+//     console.log(`listening on port ${PORT}`);
+// })
 
 
 module.exports = {APP, postFoodData, userPost}
