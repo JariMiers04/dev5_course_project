@@ -81,7 +81,7 @@ describe("Testing GET endpoints", () => {
         it("/food/:barcode getting a specific item from the database", (done) => {
             REQUEST.get("/food/5400141299649").expect(200).end((err, res) => {
                 try {
-                    console.log("Get on barcode", res.body)
+                    // console.log("Get on barcode", res.body)
                     expect(res.body).toEqual(getOnBarcode);
                     done();
                 } catch (err) {
@@ -102,7 +102,7 @@ describe("Testing GET endpoints", () => {
         it("/users endpoint of users", (done) => {
             REQUEST.get("/users").expect(200).end((err, res) => {
                 try {
-                    console.log(res.body)
+                    // console.log(res.body)
                     done();
                 } catch (err) {
                     done(err);
@@ -143,7 +143,7 @@ describe("Testing GET endpoints", () => {
         it("/user/:id getting a specific user from the database", (done) => {
             REQUEST.get("/user/1").expect(200).end((err, res) => {
                 try {
-                    console.log("Get on id", res.body);
+                    // console.log("Get on id", res.body);
                     expect(res.body).toEqual(getOnUserId);
                     done();
                 } catch (err) {
@@ -185,7 +185,7 @@ describe("Testing POST endpoints", () => {
 
             REQUEST.post("/food").send(addFoodItem).expect(200).end((err, res) => {
                 try {
-                    console.log(res.body);
+                    // console.log(res.body);
                     expect(res.body.barcode).toEqual(addFoodItem.barcode);
                     expect(res.body.product_name).toEqual("This is a test from the integration");
                     expect(res.body.weight).toEqual(69);
@@ -216,7 +216,7 @@ describe("Testing POST endpoints", () => {
 
             REQUEST.post("/user").send(addUser).expect(200).end((err, res) => {
                 try {
-                    console.log(res.body);
+                    // console.log(res.body);
                     expect(res.body.id).toEqual(addUser.id);
                     expect(res.body.name).toEqual("Janneke");
                     done()
