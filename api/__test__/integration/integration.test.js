@@ -230,46 +230,46 @@ describe("Testing POST endpoints", () => {
 })
 
 
-describe("Testing PUT endpoints", () => {
-    describe("FOOD UPDATE endpoint", () => {
-        /**
-         * 
-         * UPDATE FOOD
-         * 
-         */
+// describe("Testing PUT endpoints", () => {
+//     describe("FOOD UPDATE endpoint", () => {
+//         /**
+//          * 
+//          * UPDATE FOOD
+//          * 
+//          */
 
-        // still problem ask teacher
-        it("/food/:barcode update", (done) => {
-            REQUEST.put("/food/5400141916229").expect(401).end((err, res) => {
-                try {
-                    done();
-                } catch (err) {
-                    done(err)
-                }
-            })
-        })
-    })
+//         // still problem ask teacher
+//         it("/food/:barcode update", (done) => {
+//             REQUEST.put("/food/5400141916229").expect(401).end((err, res) => {
+//                 try {
+//                     done();
+//                 } catch (err) {
+//                     done(err)
+//                 }
+//             })
+//         })
+//     })
 
-    describe("USER UPDATE endpoint", () => {
-        /**
-         * 
-         * UPDATE USER
-         * 
-         */
+//     describe("USER UPDATE endpoint", () => {
+//         /**
+//          * 
+//          * UPDATE USER
+//          * 
+//          */
 
 
-        it("/user/:id update", (done) => {
-            REQUEST.put("/user/4").expect(401).end((err, res) => {
-                try {
-                    done()
-                } catch (err) {
-                    done(err)
-                }
-            })
-        })
+//         it("/user/:id update", (done) => {
+//             REQUEST.put("/user/4").expect(401).end((err, res) => {
+//                 try {
+//                     done()
+//                 } catch (err) {
+//                     done(err)
+//                 }
+//             })
+//         })
 
-    })
-});
+//     })
+// });
 
 
 describe("Testing DELETE endpoints", () => {
