@@ -80,8 +80,24 @@ APP.put("/food/:barocde", async ()=>{
         weight: req.body.weight
     })
 
-    res.status(200).send(await item);
+    res.sendStatus(200).send(await item);
 })
+
+
+APP.delete("/food/:barcode", async (req,res)=>{
+    let item = KNEX.table("food").where({
+        barcode: req.params.barcode
+    }).delete();
+
+    res.sendStatus(200).send(await item);
+})
+
+
+/**
+ * 
+ * USERS
+ * 
+ */
 
 
 APP.listen(PORT, ()=>{
