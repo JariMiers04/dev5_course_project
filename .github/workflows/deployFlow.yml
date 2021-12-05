@@ -12,7 +12,7 @@ env:
   API_PORT: 3000
   POSTGRES_USER: root
   POSTGRES_PASSWORD: root
-  POSTGRES_DATABASE: foodStock
+  POSTGRES_DB: foodStock
 
 jobs:
   # This workflow contains a single job called "build"
