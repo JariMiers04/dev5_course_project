@@ -26,11 +26,12 @@ const SEED ={
 
         // adding users to postgres database
             await KNEX('users').insert([{
+                id: 1,
                 name: "Jari Miers",
                 email: "jari.miers@student.ehb.be",
                 password: "test"
             },{
-            
+                id: 2,
                 name: "Fien Denblinden",
                 email: "fien.denblinden@student.ehb.be",
                 password: "test2"

@@ -99,6 +99,21 @@ APP.delete("/food/:barcode", async (req,res)=>{
  * 
  */
 
+ APP.get("/users", async (req,res)=>{
+    await KNEX.select().table('users').then((data)=>{
+        res.send(data);
+    })
+});
+
+APP.get("/user/:id", async (req,res)=>{
+    console.log(req.params.id);
+
+    let user = KNEX.table('users').where({
+        id: req.params.id
+    }).first().then((row)=>row);
+
+    res.send(await user);
+});
 
 APP.listen(PORT, ()=>{
     console.log(`listening on port ${PORT}`);
