@@ -75,7 +75,8 @@ describe("Testing GET endpoints", () => {
             barcode: 5400141299649,
             product_name: "6 eieren",
             expiration_date: "2021-11-05",
-            weight: 70
+            weight: 70,
+            fridge_id: 1
         }
 
         it("/food/:barcode getting a specific item from the database", (done) => {
@@ -137,7 +138,8 @@ describe("Testing GET endpoints", () => {
             id: 1,
             name: "Jari Miers",
             email: "jari.miers@student.ehb.be",
-            password: "test"
+            password: "test",
+            fridge_id: 1
         }
 
         it("/user/:id getting a specific user from the database", (done) => {
@@ -168,7 +170,8 @@ describe("Testing POST endpoints", () => {
             barcode: 5400141299627,
             product_name: "This is a test from the integration",
             expiration_date: "2021-12-04",
-            weight: 69
+            weight: 69,
+            fridge_id: 1
         }
 
         it("/ connect with endpoint that is not a post", (done) => {
@@ -209,7 +212,8 @@ describe("Testing POST endpoints", () => {
             id: 3,
             name: "Janneke",
             email: "janneke@outlook.com",
-            password: "jeanke"
+            password: "jeanke",
+            fridge_id: 1
         }
 
         it("/user add user", (done) => {
@@ -300,7 +304,8 @@ describe("Testing DELETE endpoints", () => {
                     barcode: 5400141299649,
                     product_name: "6 eieren",
                     expiration_date: "2021-11-05",
-                    weight: 70
+                    weight: 70,
+                    fridge_id: 1
                 }]);
                 done();
             })
