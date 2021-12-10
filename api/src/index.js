@@ -17,7 +17,7 @@ APP.use(BODYPARSER.json());
 
 async function initializer(){
    await MIGRATE.makeTables();
-   await SEED.insertData();
+//    await SEED.insertData();
 };
 
 initializer();
@@ -75,7 +75,7 @@ async function postFoodData(addFood){
 }
 
 
-APP.put("/food/:barocde", async ()=>{
+APP.put("/food/:barcode", async (req,res)=>{
     let item = KNEX.table("food").where({
         barcode: req.params.barcode
     }).update({
@@ -92,10 +92,12 @@ APP.delete("/food/:barcode", async (req,res)=>{
     await KNEX.table("food").where({
         barcode: req.params.barcode
     }).delete()
-    .then((dat) => {
-        res.sendStatus(200).send(dat);
+    .then((data) => {
+        res.sendStatus(200).send(data);
     })
-    .catch((e) => {})
+    .catch((e) => {
+        res.send(e);
+    })
  
 })
 
@@ -129,12 +131,14 @@ APP.post("/user", async (req,res)=>{
     let name = req.body.name;
     let email = req.body.email;
     let password = req.body.password;
+    let fridge_id = req.body.fridge_id
 
     let postUser = {
         id,
         name,
         email,
-        password
+        password,
+        fridge_id,
     }
 
     userPost(postUser).then(res.status(200).send(req.body));
@@ -145,12 +149,13 @@ async function userPost(postUser){
         id: postUser.id,
         name: postUser.name,
         email: postUser.email,
-        password: postUser.password
+        password: postUser.password,
+        fridge_id: postUser.fridge_id
     })
 }
 
 
-APP.put("/user/:id", async ()=>{
+APP.put("/user/:id", async (req,res)=>{
     let user = KNEX.table("users").where({
         id: req.params.id
     }).update({
@@ -164,11 +169,15 @@ APP.put("/user/:id", async ()=>{
 
 
 APP.delete("/user/:id", async (req,res)=>{
-    let user = KNEX.table("users").where({
+    await KNEX.table("users").where({
         id: req.params.id
-    }).delete();
-
-    res.sendStatus(200).send(await user);
+    }).delete()
+    .then((data) => {
+        res.sendStatus(200).send(data);
+    })
+    .catch((e) => {
+        res.send(e);
+    })
 })
 
 APP.listen(PORT, ()=>{
