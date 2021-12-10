@@ -17,7 +17,7 @@ APP.use(BODYPARSER.json());
 
 async function initializer(){
    await MIGRATE.makeTables();
-//    await SEED.insertData();
+   await SEED.insertData();
 };
 
 initializer();
@@ -86,11 +86,14 @@ APP.put("/food/:barocde", async ()=>{
 
 
 APP.delete("/food/:barcode", async (req,res)=>{
-    let item = KNEX.table("food").where({
+    await KNEX.table("food").where({
         barcode: req.params.barcode
-    }).delete();
-
-    res.sendStatus(200).send(await item);
+    }).delete()
+    .then((dat) => {
+        res.sendStatus(200).send(dat);
+    })
+    .catch((e) => {})
+ 
 })
 
 
@@ -165,9 +168,9 @@ APP.delete("/user/:id", async (req,res)=>{
     res.sendStatus(200).send(await user);
 })
 
-// APP.listen(PORT, ()=>{
-//     console.log(`listening on port ${PORT}`);
-// })
+APP.listen(PORT, ()=>{
+    console.log(`listening on port ${PORT}`);
+})
 
 
 module.exports = {APP, postFoodData, userPost}

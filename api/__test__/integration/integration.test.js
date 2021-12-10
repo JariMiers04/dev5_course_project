@@ -292,23 +292,21 @@ describe("Testing DELETE endpoints", () => {
     })
 
     // still problem ask teacher
-    // it("/food/:barcode SUCCEED delete", (done)=>{
-    //     REQUEST.delete("/food/5400141299649").expect(200).end((err,res)=>{
-    //         try{
-    //             KNEX("food").where("barcode", 5400141299649).then((data)=>{
-    //                 expect(data).toEqual([{
-    //                     barcode: 5400141299649,
-    //                     product_name: "6 eieren",
-    //                     expiration_date: "2021-11-05",
-    //                     weight: 70
-    //                 }]);
-    //                 done();
-    //             })
-    //         }catch(err){
-    //             done(err)
-    //         }
-    //     })
-    // })
+    it("/food/:barcode SUCCEED delete", (done)=>{
+        REQUEST.delete("/food/5400141299649").expect(200).end((err,res)=>{
+        
+            KNEX("food").where("barcode", 5400141299649).then((data)=>{
+                expect(data).toEqual([{
+                    barcode: 5400141299649,
+                    product_name: "6 eieren",
+                    expiration_date: "2021-11-05",
+                    weight: 70
+                }]);
+                done();
+            })
+            .catch((e) => done(e))
+        })
+    })
     })
 
     describe("USER DELETE endpoint", ()=>{

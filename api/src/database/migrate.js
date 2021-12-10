@@ -6,6 +6,15 @@ const MIGRATE = {
     async makeTables(){
 
         try{
+
+            await KNEX.schema.hasTable("fridge").then(async (exists)=>{
+                if(!exists){
+                    return await KNEX.schema.createTable('fridge', (table) => {
+                        table.integer('id').primary();
+                    })
+                }
+            });
+
             await KNEX.schema.hasTable("food").then(async (exists) => {
                 if (!exists) {
                     return await KNEX.schema.createTable('food', (table) => {
@@ -13,6 +22,7 @@ const MIGRATE = {
                         table.string('product_name').notNullable();
                         table.string('expiration_date').notNullable();
                         table.integer('weight').notNullable();
+                        table.integer("fridge_id").unsigned().notNullable().references('id').inTable('fridge');
                     })
                 }
             });
@@ -24,14 +34,7 @@ const MIGRATE = {
                         table.string('name').notNullable();
                         table.string('email').notNullable();
                         table.string('password').notNullable();
-                    })
-                }
-            });
-    
-            await KNEX.schema.hasTable("fridge").then(async (exists)=>{
-                if(!exists){
-                    return await KNEX.schema.createTable('fridge', (table) => {
-                        table.increments('id').primary();
+                        table.integer("fridge_id").unsigned().notNullable().references('id').inTable('fridge');
                     })
                 }
             });
