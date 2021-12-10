@@ -51,12 +51,14 @@ APP.post("/food", async (req,res)=>{
     let product_name = req.body.product_name;
     let expiration_date = req.body.expiration_date;
     let weight = req.body.weight;
+    let fridge_id = req.body.fridge_id;
 
     let postFood = {
         barcode,
         product_name,
         expiration_date,
-        weight
+        weight,
+        fridge_id
     }
 
     postFoodData(postFood).then(res.status(200).send(req.body));
@@ -67,7 +69,8 @@ async function postFoodData(addFood){
         barcode: addFood.barcode,
         product_name: addFood.product_name,
         expiration_date: addFood.expiration_date,
-        weight: addFood.weight
+        weight: addFood.weight,
+        fridge_id: addFood.fridge_id
     })
 }
 
