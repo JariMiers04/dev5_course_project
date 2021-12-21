@@ -39,8 +39,6 @@ APP.get("/", async (req,res)=>{
 
 
 APP.get("/food/:barcode", async (req,res)=>{
-    console.log(req.params.barcode);
-
     let foodItem = KNEX.table('food').where({
         barcode: req.params.barcode
     }).first().then((row)=>row);
@@ -66,7 +64,7 @@ APP.post("/food", async (req,res)=>{
     if(FOOD.checkPostFood(req.body)){
         postFoodData(postFood).then(res.status(200).send(req.body));
     }else{
-        return res.status(400);
+        return res.sendStatus(400);
     }
 });
 
@@ -124,8 +122,6 @@ APP.delete("/food/:barcode", async (req,res)=>{
 
 
 APP.get("/user/:id", async (req,res)=>{
-    console.log(req.params.id);
-
     let user = KNEX.table('users').where({
         id: req.params.id
     }).first().then((row)=>row);
@@ -151,7 +147,7 @@ APP.post("/user", async (req,res)=>{
     if(USER.checkPostUser(req.body) === true){
         userPost(postUser).then(res.status(200).send(req.body));
     }else{
-        return res.status(400);
+        return res.sendStatus(400);
     }
    
 });
