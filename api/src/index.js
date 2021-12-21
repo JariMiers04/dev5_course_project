@@ -20,7 +20,7 @@ APP.use(BODYPARSER.json());
 
 async function initializer(){
    await MIGRATE.makeTables();
-//    await SEED.insertData();
+   await SEED.insertData();
 };
 
 initializer();
