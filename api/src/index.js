@@ -10,6 +10,9 @@ const {MIGRATE} = require("./database/migrate");
 const {SEED} = require("../src/database/seeder");
 const {KNEX} = require("./knex");
 
+const FOOD = require("./testHelpers/foodTester");
+const USER = require("./testHelpers/userTester");
+
 APP.use(BODYPARSER.urlencoded({
     extended: true
 }))
@@ -36,8 +39,6 @@ APP.get("/", async (req,res)=>{
 
 
 APP.get("/food/:barcode", async (req,res)=>{
-    console.log(req.params.barcode);
-
     let foodItem = KNEX.table('food').where({
         barcode: req.params.barcode
     }).first().then((row)=>row);
@@ -51,15 +52,20 @@ APP.post("/food", async (req,res)=>{
     let product_name = req.body.product_name;
     let expiration_date = req.body.expiration_date;
     let weight = req.body.weight;
+    let fridge_id = req.body.fridge_id;
 
     let postFood = {
         barcode,
         product_name,
         expiration_date,
-        weight
+        weight,
+        fridge_id
     }
-
-    postFoodData(postFood).then(res.status(200).send(req.body));
+    if(FOOD.checkPostFood(req.body)){
+        postFoodData(postFood).then(res.status(200).send(req.body));
+    }else{
+        return res.sendStatus(400);
+    }
 });
 
 async function postFoodData(addFood){
@@ -67,12 +73,15 @@ async function postFoodData(addFood){
         barcode: addFood.barcode,
         product_name: addFood.product_name,
         expiration_date: addFood.expiration_date,
-        weight: addFood.weight
+        weight: addFood.weight,
+        fridge_id: addFood.fridge_id
     })
 }
 
 
-APP.put("/food/:barocde", async ()=>{
+
+
+APP.put("/food/:barcode", async (req,res)=>{
     let item = KNEX.table("food").where({
         barcode: req.params.barcode
     }).update({
@@ -86,11 +95,16 @@ APP.put("/food/:barocde", async ()=>{
 
 
 APP.delete("/food/:barcode", async (req,res)=>{
-    let item = KNEX.table("food").where({
+    await KNEX.table("food").where({
         barcode: req.params.barcode
-    }).delete();
-
-    res.sendStatus(200).send(await item);
+    }).delete()
+    .then((data) => {
+        res.sendStatus(200).send(data);
+    })
+    .catch((e) => {
+        res.send(e);
+    })
+ 
 })
 
 
@@ -108,8 +122,6 @@ APP.delete("/food/:barcode", async (req,res)=>{
 
 
 APP.get("/user/:id", async (req,res)=>{
-    console.log(req.params.id);
-
     let user = KNEX.table('users').where({
         id: req.params.id
     }).first().then((row)=>row);
@@ -123,15 +135,21 @@ APP.post("/user", async (req,res)=>{
     let name = req.body.name;
     let email = req.body.email;
     let password = req.body.password;
+    let fridge_id = req.body.fridge_id
 
     let postUser = {
         id,
         name,
         email,
-        password
+        password,
+        fridge_id,
     }
-
-    userPost(postUser).then(res.status(200).send(req.body));
+    if(USER.checkPostUser(req.body) === true){
+        userPost(postUser).then(res.status(200).send(req.body));
+    }else{
+        return res.sendStatus(400);
+    }
+   
 });
 
 async function userPost(postUser){
@@ -139,12 +157,13 @@ async function userPost(postUser){
         id: postUser.id,
         name: postUser.name,
         email: postUser.email,
-        password: postUser.password
+        password: postUser.password,
+        fridge_id: postUser.fridge_id
     })
 }
 
 
-APP.put("/user/:id", async ()=>{
+APP.put("/user/:id", async (req,res)=>{
     let user = KNEX.table("users").where({
         id: req.params.id
     }).update({
@@ -158,16 +177,20 @@ APP.put("/user/:id", async ()=>{
 
 
 APP.delete("/user/:id", async (req,res)=>{
-    let user = KNEX.table("users").where({
+    await KNEX.table("users").where({
         id: req.params.id
-    }).delete();
-
-    res.sendStatus(200).send(await user);
+    }).delete()
+    .then((data) => {
+        res.sendStatus(200).send(data);
+    })
+    .catch((e) => {
+        res.send(e);
+    })
 })
 
-// APP.listen(PORT, ()=>{
-//     console.log(`listening on port ${PORT}`);
-// })
+APP.listen(PORT, ()=>{
+    console.log(`listening on port ${PORT}`);
+})
 
 
 module.exports = {APP, postFoodData, userPost}
