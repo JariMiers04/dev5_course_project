@@ -10,7 +10,8 @@ const {MIGRATE} = require("./database/migrate");
 const {SEED} = require("../src/database/seeder");
 const {KNEX} = require("./knex");
 
-const {checkPostFood} = require("./testHelpers/foodTester");
+const FOOD = require("./testHelpers/foodTester");
+const USER = require("./testHelpers/userTester");
 
 APP.use(BODYPARSER.urlencoded({
     extended: true
@@ -62,8 +63,7 @@ APP.post("/food", async (req,res)=>{
         weight,
         fridge_id
     }
-
-    if(checkPostFood(req.body)){
+    if(FOOD.checkPostFood(req.body)){
         postFoodData(postFood).then(res.status(200).send(req.body));
     }else{
         return res.status(400);
@@ -148,8 +148,12 @@ APP.post("/user", async (req,res)=>{
         password,
         fridge_id,
     }
-
-    userPost(postUser).then(res.status(200).send(req.body));
+    if(USER.checkPostUser(req.body) === true){
+        userPost(postUser).then(res.status(200).send(req.body));
+    }else{
+        return res.status(400);
+    }
+   
 });
 
 async function userPost(postUser){

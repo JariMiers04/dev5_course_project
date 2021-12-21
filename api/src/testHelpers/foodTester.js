@@ -7,7 +7,7 @@ let year = currentDate.getFullYear();
 function checkPostFood(food){
     if(!food || !food.barcode || !food.product_name || !food.expiration_date || !food.weight || !food.fridge_id){
         return false
-    }else if(!checkFoodBarcode(food.barcode) || !checkExpirationDate(food.expiration_date) || !checkFoodProductName(food.product_name) || !checkFoodWeight(food.weight)){
+    } if(!checkFoodBarcode(food.barcode) || !checkExpirationDate(food.expiration_date) || !checkFoodProductName(food.product_name) || !checkFoodWeight(food.weight)){
         return false
     }
     else{
