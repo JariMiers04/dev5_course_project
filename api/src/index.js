@@ -10,6 +10,8 @@ const {MIGRATE} = require("./database/migrate");
 const {SEED} = require("../src/database/seeder");
 const {KNEX} = require("./knex");
 
+const {checkPostFood} = require("./testHelpers/foodTester");
+
 APP.use(BODYPARSER.urlencoded({
     extended: true
 }))
@@ -61,7 +63,11 @@ APP.post("/food", async (req,res)=>{
         fridge_id
     }
 
-    postFoodData(postFood).then(res.status(200).send(req.body));
+    if(checkPostFood(req.body)){
+        postFoodData(postFood).then(res.status(200).send(req.body));
+    }else{
+        return res.status(400);
+    }
 });
 
 async function postFoodData(addFood){
@@ -73,6 +79,8 @@ async function postFoodData(addFood){
         fridge_id: addFood.fridge_id
     })
 }
+
+
 
 
 APP.put("/food/:barcode", async (req,res)=>{

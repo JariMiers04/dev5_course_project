@@ -4,45 +4,41 @@ const {MIGRATE, KNEX} = require("../../src/database/migrate");
 const {SEED} = require("../../src/database/seeder");
 
 
-describe("Testing counter initializer", ()=>{
-    test("Basic calculation function",()=>{
-        expect(COUNTER.letterCount("awesome", "e")).toBe(2);
+const FOODHELPER = require("../../src/testHelpers/foodTester");
+
+const food =  {
+    barcode: 5400141916229,
+    product_name: "Salami",
+    expiration_date: "2022-12-30",
+    weight: 40,
+    fridge_id: 1
+}
+
+const user =  {
+    id: 1,
+    name: "Jari Miers",
+    email: "jari.miers@student.ehb.be",
+    password: "test",
+    fridge_id: 1
+}
+
+
+describe("Testing POSTS", ()=>{
+    it("check FOOD POST", (done)=>{
+        expect(FOODHELPER.checkPostFood(food)).toBeTruthy();
+
+        expect(FOODHELPER.checkFoodBarcode(food.barcode)).toBeTruthy();
+        expect(FOODHELPER.checkFoodBarcode(2345678923456789)).toBeFalsy();
+
+        expect(FOODHELPER.checkFoodProductName(food.product_name)).toBeTruthy();
+        expect(FOODHELPER.checkFoodProductName('')).toBeFalsy();
+
+        expect(FOODHELPER.checkExpirationDate(food.expiration_date)).toBeTruthy();
+        expect(FOODHELPER.checkExpirationDate("2020-12-01")).toBeFalsy();
+
+        expect(FOODHELPER.checkFoodWeight(food.weight)).toBeTruthy();
+        expect(FOODHELPER.checkFoodWeight(0)).toBeFalsy();
+
+        done();
     })
-});
-
-describe("Testing insert in database", ()=>{
-    // test("Check if insert worked on food table", async ()=>{
-    //     const testFoodData = {
-    //         barcode: 5400141916229
-    //     };
-
-    //    const barcode = await KNEX.select().table('food').where('barcode', testFoodData.barcode);
-    //     console.log(testFoodData.barcode);
-    //    expect(testFoodData.barcode).toBe(barcode);
-
-    // });
-
-
-    // test("Check if insert worked on users table", async ()=>{
-    //     const testUserData = {
-    //         id: 1
-    //     };
-
-    //    const user = await KNEX.select().table('users').where('id', testUserData.id);
-    //     console.log(user);
-    //    expect(user).toBe(testUserData);
-
-    // });
-
-    // test("Check if insert worked on frdige table", async ()=>{
-    //     const testFridgeData = {
-    //         id: 1
-    //     };
-
-    //    const fridge = await KNEX.select().table('fridge').where('id', testFridgeData.id);
-    //     console.log(fridge);
-    //    expect(fridge.id).toBe(testFridgeData.id);
-
-    // });
-
 })

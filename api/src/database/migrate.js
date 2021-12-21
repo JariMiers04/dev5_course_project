@@ -18,7 +18,7 @@ const MIGRATE = {
             await KNEX.schema.hasTable("food").then(async (exists) => {
                 if (!exists) {
                     return await KNEX.schema.createTable('food', (table) => {
-                        table.double('barcode', 12).primary();
+                        table.double('barcode', 13).primary();
                         table.string('product_name').notNullable();
                         table.string('expiration_date').notNullable();
                         table.integer('weight').notNullable();
