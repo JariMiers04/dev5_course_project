@@ -21,10 +21,6 @@ cd my-repo
 4)  Go to Github and copy the URL of the repository on Github
 5)  Go to VSCode and click on crtl+P (windows) or cmd+p (mac)
 6)  Type "Git: Clone" and paste the repository URL in here
-7)  This project is still under development so open the terminal
-   ```
-   git checkout developTest
-   ```
 
 ## We will be using:
 
@@ -66,7 +62,8 @@ Get all food items
 ```
 localhost:80/
 ```
-For making a post method
+
+For making a post method. Keep in mind you can not add a product with an expiration data older than the current date.
 ```
 localhost:80/food
 ```
