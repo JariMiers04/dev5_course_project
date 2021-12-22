@@ -72,6 +72,11 @@ Getting a barcode's data
 localhost:80/food/:barcode
 ```
 
+Updating a barcode's data. Keep in mind you can not add a product with an expiration data older than the current date.
+```
+localhost:80/food/:barcode
+```
+
 Deleting a barcode's data
 ```
 localhost:80/food/:barcode
