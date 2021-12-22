@@ -82,15 +82,20 @@ async function postFoodData(addFood){
 
 
 APP.put("/food/:barcode", async (req,res)=>{
-    let item = KNEX.table("food").where({
-        barcode: req.params.barcode
-    }).update({
-        product_name: req.body.product_name,
-        expiration_date: req.body.expiration_date,
-        weight: req.body.weight
-    })
+    if(FOOD.checkPutFood(req.body)){
+        let item = KNEX.table("food").where({
+            barcode: req.params.barcode
+        }).update({
+            product_name: req.body.product_name,
+            expiration_date: req.body.expiration_date,
+            weight: req.body.weight
+        })
+    
+        return res.sendStatus(200).send(await item);
+    }else{
+        return res.sendStatus(400);
+    }
 
-    res.sendStatus(200).send(await item);
 })
 
 
@@ -144,7 +149,7 @@ APP.post("/user", async (req,res)=>{
         password,
         fridge_id,
     }
-    if(USER.checkPostUser(req.body) === true){
+    if(USER.checkPostUser(req.body)){
         userPost(postUser).then(res.status(200).send(req.body));
     }else{
         return res.sendStatus(400);
@@ -164,6 +169,7 @@ async function userPost(postUser){
 
 
 APP.put("/user/:id", async (req,res)=>{
+    if(USER.checkPostUser(req.body)){
     let user = KNEX.table("users").where({
         id: req.params.id
     }).update({
@@ -172,7 +178,10 @@ APP.put("/user/:id", async (req,res)=>{
         password: req.body.password
     })
 
-    res.sendStatus(200).send(await user);
+    return res.sendStatus(200).send(await user);
+    }else{
+        return res.sendStatus(400);
+    }
 })
 
 
