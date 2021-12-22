@@ -1,10 +1,18 @@
 function checkPostUser(user){
-    if(!user || !user.name || !user.email || !user.password){
+    if(!user || !user.id || !user.name || !user.email || !user.password){
         return false
-    } if(!checkUserName(user.name) || !checkUserEmail(user.email) || !checkUserPassword(user.password)){
+    } if(!checkUserId(user.id) || !checkUserName(user.name) || !checkUserEmail(user.email) || !checkUserPassword(user.password)){
         return false
     }
     else{
+        return true
+    }
+}
+
+function checkUserId(id){
+    if(!id || id<1){
+        return false
+    }else{
         return true
     }
 }
