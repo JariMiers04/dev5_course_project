@@ -20,7 +20,7 @@ APP.use(BODYPARSER.json());
 
 async function initializer(){
    await MIGRATE.makeTables();
-   await SEED.insertData();
+//    await SEED.insertData();
 };
 
 initializer();
@@ -88,7 +88,8 @@ APP.put("/food/:barcode", async (req,res)=>{
         }).update({
             product_name: req.body.product_name,
             expiration_date: req.body.expiration_date,
-            weight: req.body.weight
+            weight: req.body.weight,
+            fridge_id: req.body.fridge_id
         })
     
         return res.sendStatus(200).send(await item);
@@ -175,7 +176,8 @@ APP.put("/user/:id", async (req,res)=>{
     }).update({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        fridge_id: req.body.fridge_id
     })
 
     return res.sendStatus(200).send(await user);
